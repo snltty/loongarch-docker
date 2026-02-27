@@ -8,5 +8,5 @@ RUN curl -fsSL https://github.com/loongson-community/dotnet-unofficial-build/rel
 RUN ls
 RUN mkdir -p /dotnet
 RUN tar xf dotnet-sdk-9.0.104-linux-loongarch64.tar.gz -C /dotnet
-ln -s /dotnet/dotnet /usr/bin/dotnet
+RUN ln -s /dotnet/dotnet /usr/bin/dotnet
 RUN dotnet --version
