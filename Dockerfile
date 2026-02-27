@@ -1,14 +1,17 @@
 FROM cr.loongnix.cn/loongson/loongnix:20
-workdir /root
+WORKDIR /root
 
-RUN apt-get update -o Acquire::AllowInsecureRepositories=yes || true && \
-    apt-get install -y --no-install-recommends gnupg && \
-    apt-key update && \
+# 直接使用允许未认证的方式安装基础工具
+RUN apt-get update -o Acquire::AllowInsecureRepositories=true -o Acquire::AllowDowngradeToInsecureRepositories=true && \
+    apt-get install -y --no-install-recommends --allow-unauthenticated wget xz-utils ca-certificates && \
     apt-get clean
 
-RUN apt-get update -y
-RUN apt-get install -y --no-install-recommends apt-transport-https ca-certificates curl git wget tzdata openssh-client xz-utils libicu67
+# 下载并安装dotnet
+RUN wget http://ftp.loongnix.cn/dotnet/8.0.22/8.0.22-1/pkg/dotnet-sdk-8.0.122-linux-loongarch64.tar.xz && \
+    mkdir dotnet && \
+    tar -xvf dotnet-sdk-8.0.122-linux-loongarch64.tar.xz -C dotnet && \
+    ln -s /root/dotnet/dotnet /usr/bin/dotnet && \
+    rm dotnet-sdk-8.0.122-linux-loongarch64.tar.xz
 
-RUN wget http://ftp.loongnix.cn/dotnet/8.0.22/8.0.22-1/pkg/dotnet-sdk-8.0.122-linux-loongarch64.tar.xz 
-RUN mkdir dotnet && tar -xvf dotnet-sdk-8.0.122-linux-loongarch64.tar.xz -C dotnet
-RUN ln -s /root/dotnet/dotnet /usr/bin/dotnet
+# 验证安装
+RUN dotnet --info
