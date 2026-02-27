@@ -11,7 +11,11 @@ RUN apt-get update && \
 #RUN ln -s /dotnet/dotnet /usr/bin/dotnet
 #RUN dotnet --version
 
-RUN wget https://dot.net/v1/dotnet-install.sh
-RUN chmod +x dotnet-install.sh
-RUN mkdir -p /usr/local/dotnet
-RUN ./dotnet-install.sh --channel 8.0 --install-dir /usr/local/dotnet --version latest
+
+RUN curl -fsSL https://ftp.loongnix.cn/dotnet/8.0.22/8.0.22-1/pkg/aspnetcore-runtime-8.0.22-linux-loongarch64.tar.xz -o dotnet-sdk.tar.gz
+RUN mkdir -p /dotnet
+RUN tar xf dotnet-sdk.tar.gz -C /dotnet
+RUN ln -s /dotnet/dotnet /usr/bin/dotnet
+RUN dotnet --version
+
+
