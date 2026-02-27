@@ -1,5 +1,11 @@
 FROM cr.loongnix.cn/loongson/loongnix:20
 workdir /root
+
+RUN apt-get update -o Acquire::AllowInsecureRepositories=yes || true && \
+    apt-get install -y --no-install-recommends gnupg && \
+    apt-key update && \
+    apt-get clean
+
 RUN apt-get update -y
 RUN apt-get install -y --no-install-recommends apt-transport-https ca-certificates curl git wget tzdata openssh-client xz-utils libicu67
 
