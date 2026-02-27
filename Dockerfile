@@ -1,4 +1,4 @@
-FROM cr.loongnix.cn/library/debian:buster
+FROM cr.loongnix.cn/loongson/loongnix:20
 workdir /root
 RUN apt-get update -y
 RUN apt-get install -y --no-install-recommends apt-transport-https ca-certificates curl git wget tzdata openssh-client xz-utils libicu67
