@@ -10,4 +10,4 @@ RUN mkdir -p /dotnet
 RUN tar xf dotnet-sdk-9.0.104-linux-loongarch64.tar.gz -C /dotnet
 RUN cd dotnet
 RUN ls
-RUN /dotnet/dotnet
+RUN /dotnet/dotnet --version
