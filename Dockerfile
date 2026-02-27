@@ -13,8 +13,8 @@ RUN apt-get update && \
 
 
 RUN curl -fsSL https://ftp.loongnix.cn/dotnet/8.0.22/8.0.22-1/pkg/aspnetcore-runtime-8.0.22-linux-loongarch64.tar.xz -o dotnet-sdk.tar.gz
-RUN ls
 RUN mkdir -p /dotnet
+RUN ls
 RUN tar xf dotnet-sdk.tar.gz -C /dotnet
 RUN ln -s /dotnet/dotnet /usr/bin/dotnet
 RUN dotnet --version
