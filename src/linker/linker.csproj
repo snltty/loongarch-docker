@@ -1,0 +1,87 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFrameworks>net8.0</TargetFrameworks>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>disable</Nullable>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<ApplicationManifest>app.manifest</ApplicationManifest>
+		<ApplicationIcon>favicon.ico</ApplicationIcon>
+		<Configurations>Debug;Release</Configurations>
+		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+		<SignAssembly>true</SignAssembly>
+		<ServerGarbageCollection>false</ServerGarbageCollection>
+		<Title>linker</Title>
+		<Authors>snltty</Authors>
+		<Company>snltty</Company>
+		<Description>1. 一些累计更新，一些BUG修复
+2. #92 松开打洞loading限制，允许选择中继节点
+3. #89 windows下利用任务计划进行进程守护，定时检查服务
+4. 优化客户端管理ws并发
+5. 减少服务器推送，减轻主服务器压力</Description>
+		<Copyright>snltty</Copyright>
+		<PackageProjectUrl>https://github.com/snltty/linker</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/snltty/linker</RepositoryUrl>
+		<PackageReleaseNotes>linker</PackageReleaseNotes>
+		<Version>2.0.0</Version>
+		<AssemblyVersion>2.0.0</AssemblyVersion>
+		<FileVersion>2.0.0</FileVersion>
+		<DelaySign>False</DelaySign>
+
+		<JsonSerializerIsReflectionEnabledByDefault>true</JsonSerializerIsReflectionEnabledByDefault>
+		<BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+		<PublishAot>false</PublishAot>
+		<PublishTrimmed>true</PublishTrimmed>
+		<PublishSingleFile>true</PublishSingleFile>
+		<TieredPGO>true</TieredPGO>
+		<TrimMode>partial</TrimMode>
+		<EventSourceSupport>false</EventSourceSupport>
+		<EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+		<DebuggerSupport>false</DebuggerSupport>
+		<EnableUnsafeBinaryFormatterSerialization>false</EnableUnsafeBinaryFormatterSerialization>
+		<EnableUnsafeUTF7Encoding>false</EnableUnsafeUTF7Encoding>
+		<HttpActivityPropagationSupport>false</HttpActivityPropagationSupport>
+		<InvariantGlobalization>false</InvariantGlobalization>
+		<MetadataUpdaterSupport>false</MetadataUpdaterSupport>
+		<UseSystemResourceKeys>true</UseSystemResourceKeys>
+		<MetricsSupport>false</MetricsSupport>
+		<StackTraceSupport>false</StackTraceSupport>
+		<XmlResolverIsNetworkingEnabledByDefault>false</XmlResolverIsNetworkingEnabledByDefault>
+	</PropertyGroup>
+
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<DebugType>full</DebugType>
+		<DebugSymbols>true</DebugSymbols>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<DebugType>full</DebugType>
+		<DebugSymbols>true</DebugSymbols>
+		<Optimize>True</Optimize>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0|AnyCPU'">
+		<DebugType>embedded</DebugType>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0|AnyCPU'">
+		<DebugType>embedded</DebugType>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Update="404_default.html">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="msquic-openssl.dll" Condition="'$(RuntimeIdentifier)'=='win-x64' or '$(RuntimeIdentifier)'=='win-arm64'">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="msquic.dll" Condition="'$(RuntimeIdentifier)'=='win-x64' or '$(RuntimeIdentifier)'=='win-arm64'">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="System.ServiceProcess.ServiceController" Version="8.0.1" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\linker.messenger.entry\linker.messenger.entry.csproj" />
+	</ItemGroup>
+</Project>
